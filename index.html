@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>運命の振袖色診断 | だるまや呉服店</title>
+  <meta name="description"
+    content="パーソナルカラー診断であなたに似合う振袖の色を見つけよう。8つの質問に答えるだけで、あなたの魅力を最大限に引き出す運命の一着がわかります。大阪・駒川商店街のだるまや呉服店">
+  <meta property="og:title" content="運命の振袖色診断 | だるまや呉服店">
+  <meta property="og:description" content="パーソナルカラー診断であなたに似合う振袖の色を見つけよう">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- 花びらパーティクル用Canvas -->
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section id="hero" class="section hero-section">
+    <div class="hero-content">
+      <p class="hero-eyecatch">パーソナルカラー × 振袖</p>
+      <h1 class="hero-title">
+        <span class="title-line">運命の</span>
+        <span class="title-line accent">振袖色</span>
+        <span class="title-line">診断</span>
+      </h1>
+      <p class="hero-subtitle">あなたの魅力を最大限に引き出す<br>一生に一度の振袖を見つけよう</p>
+      <div class="hero-season-dots">
+        <span class="dot spring" title="春"></span>
+        <span class="dot summer" title="夏"></span>
+        <span class="dot autumn" title="秋"></span>
+        <span class="dot winter" title="冬"></span>
+      </div>
+      <button id="scroll-to-intro" class="btn btn-hero" aria-label="詳しく見る">
+        <span>はじめる</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12l7 7 7-7" />
+        </svg>
+      </button>
+    </div>
+    <div class="hero-scroll-indicator">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ==================== INTRO SECTION ==================== -->
+  <section id="intro" class="section intro-section">
+    <div class="container">
+      <div class="glass-card intro-card">
+        <h2 class="section-title">パーソナルカラーとは？</h2>
+        <p class="intro-text">
+          パーソナルカラーとは、あなたが生まれ持った<strong>肌・髪・瞳の色</strong>と調和する色のこと。<br>
+          似合う色の振袖を選ぶことで、<strong>顔映りが激変</strong>します。
+        </p>
+        <div class="merits-grid">
+          <div class="merit-item">
+            <div class="merit-icon">✨</div>
+            <h3>肌の透明感UP</h3>
+            <p>似合う色が肌を明るく美しく見せます</p>
+          </div>
+          <div class="merit-item">
+            <div class="merit-icon">💎</div>
+            <h3>写真映え抜群</h3>
+            <p>一生の思い出に残る写真が最高の仕上がりに</p>
+          </div>
+          <div class="merit-item">
+            <div class="merit-icon">🎯</div>
+            <h3>迷わず選べる</h3>
+            <p>何百着もの中から「あなたの一着」が見つかる</p>
+          </div>
+        </div>
+        <button id="start-quiz-btn" class="btn btn-primary">
+          <span>診断スタート</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== QUIZ SECTION ==================== -->
+  <section id="quiz" class="section quiz-section" style="display:none;">
+    <div class="container">
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+        <span class="progress-text" id="progress-text">1 / 8</span>
+      </div>
+
+      <!-- Question Card -->
+      <div class="glass-card quiz-card" id="quiz-card">
+        <p class="question-number" id="question-number">Question 1</p>
+        <h2 class="question-text" id="question-text"></h2>
+        <div class="options-container" id="options-container"></div>
+      </div>
+
+      <!-- Back Button -->
+      <button id="back-btn" class="btn btn-back" style="display:none;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        <span>前の質問に戻る</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ==================== RESULT SECTION ==================== -->
+  <section id="result" class="section result-section" style="display:none;">
+    <div class="container">
+      <!-- Result Header -->
+      <div class="glass-card result-card">
+        <p class="result-label">あなたの診断結果</p>
+        <div class="result-type-badge" id="result-badge">
+          <span class="result-emoji" id="result-emoji"></span>
+          <h2 class="result-type-name" id="result-type-name"></h2>
+        </div>
+        <p class="result-description" id="result-description"></p>
+      </div>
+
+      <!-- Keywords -->
+      <div class="glass-card result-keywords-card">
+        <h3 class="result-card-title">あなたの印象</h3>
+        <div class="keywords-container" id="result-keywords"></div>
+      </div>
+
+      <!-- Furisode Recommendations -->
+      <div class="glass-card result-furisode-card">
+        <h3 class="result-card-title">似合う振袖カラー</h3>
+        <div class="color-palette" id="result-palette"></div>
+        <div class="furisode-advice" id="furisode-advice"></div>
+      </div>
+
+      <!-- Furisode Image Gallery -->
+      <div class="glass-card result-gallery-card">
+        <h3 class="result-card-title">おすすめ振袖</h3>
+        <div class="furisode-gallery" id="furisode-gallery"></div>
+      </div>
+
+      <!-- Styling Tips -->
+      <div class="glass-card result-styling-card">
+        <h3 class="result-card-title">コーディネートのポイント</h3>
+        <div class="styling-tips" id="styling-tips"></div>
+      </div>
+
+      <!-- NG Colors -->
+      <div class="glass-card result-ng-card">
+        <h3 class="result-card-title">⚠️ 避けた方がいい色</h3>
+        <div class="ng-colors" id="ng-colors"></div>
+      </div>
+
+      <!-- Go to Coupon -->
+      <div class="result-actions">
+        <button id="go-to-coupon-btn" class="btn btn-cta btn-coupon-goto">
+          <span>診断を完了して特典へ</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+        <button id="retry-btn" class="btn btn-secondary">もう一度診断する</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== COUPON SECTION ==================== -->
+  <section id="coupon" class="section coupon-section" style="display:none;">
+    <div class="container">
+      <div class="coupon-header">
+        <p class="coupon-confetti">🎊</p>
+        <h2 class="coupon-heading">スペシャルチャンス！</h2>
+        <p class="coupon-sub">ラッキーカードをタップしてください</p>
+      </div>
+
+      <!-- Lucky Card -->
+      <div class="lucky-card-wrapper" id="lucky-card-wrapper">
+        <div class="lucky-card" id="lucky-card">
+          <div class="lucky-card-front">
+            <div class="card-gold-frame">
+              <p class="card-value">10,000<small>円OFF</small></p>
+              <p class="card-label">来店優待券</p>
+              <div class="card-cherry">🌸</div>
+            </div>
+          </div>
+          <div class="lucky-card-back">
+            <div class="card-back-design">
+              <p class="card-back-text">TAP</p>
+              <div class="card-back-pattern"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coupon Revealed Content (hidden initially) -->
+      <div class="coupon-revealed" id="coupon-revealed" style="display:none;">
+        <div class="glass-card coupon-detail-card">
+          <p class="coupon-congrats">🎉 おめでとうございます！ 🎉</p>
+          <h3 class="coupon-amount">1万円OFFクーポン</h3>
+          <p class="coupon-condition">このクーポンは来店予約時にご利用いただけます</p>
+        </div>
+        <button id="go-to-reservation-btn" class="btn btn-cta btn-reservation-goto">
+          <span>クーポンを使って来店予約</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== RESERVATION SECTION ==================== -->
+  <section id="reservation" class="section reservation-section" style="display:none;">
+    <div class="container">
+      <div class="glass-card reservation-card">
+        <h2 class="reservation-title">来店予約</h2>
+        <p class="reservation-sub">だるまや呉服店 — 駒川商店街</p>
+
+        <form id="reservation-form" class="reservation-form">
+          <div class="form-group">
+            <label class="form-label">お名前 <span class="required">必須</span></label>
+            <input type="text" id="res-name" class="form-input" placeholder="例：山田 花子" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">電話番号 <span class="required">必須</span></label>
+            <input type="tel" id="res-phone" class="form-input" placeholder="例：090-1234-5678" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">来店希望日 <span class="required">必須</span></label>
+            <input type="date" id="res-date" class="form-input" required>
+          </div>
+
+          <!-- Auto-filled diagnosis result -->
+          <div class="form-info-group">
+            <label class="form-label">診断結果（引き継ぎ済み）</label>
+            <div class="form-info-box" id="res-diagnosis">
+              <span>おすすめ：桜タイプ</span>
+            </div>
+            <div class="form-info-box coupon-applied" id="res-coupon">
+              <span>🎫 1万円OFFクーポン適用中</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-cta btn-submit">
+            <span>予約を確定する</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- After Submission -->
+      <div id="reservation-complete" class="reservation-complete" style="display:none;">
+        <div class="glass-card complete-card">
+          <p class="complete-emoji">✅</p>
+          <h3 class="complete-title">ご予約ありがとうございます！</h3>
+          <p class="complete-text">だるまや呉服店よりお電話にて<br>ご確認のご連絡をさせていただきます。</p>
+          <div class="complete-info">
+            <p>📞 06-6692-2239</p>
+            <p>🕐 営業時間：10:00〜18:30</p>
+          </div>
+        </div>
+        <button id="back-to-coupon-btn" class="btn btn-secondary">クーポン画面へ戻る</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <a href="https://daruma-ad.github.io/darumayaHP/" target="_blank" class="footer-logo">だるまや呉服店</a>
+      <p class="footer-address">大阪・駒川商店街 | 創業七十七年</p>
+      <p class="footer-copy">&copy; 2026 だるまや呉服店 All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
