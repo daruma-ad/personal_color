@@ -527,22 +527,56 @@ function goToReservationPage() {
   // Auto-fill diagnosis result
   const result = RESULTS[currentResultType];
   if (result) {
-    document.getElementById('res-diagnosis').innerHTML =
-      `<span>おすすめ：${result.name}</span>`;
+    const diagnosisText = `おすすめ：${result.name}`;
+    document.getElementById('res-diagnosis').innerHTML = `<span>${diagnosisText}</span>`;
+    // Sync with hidden input for Formspree
+    document.getElementById('hidden-diagnosis').value = diagnosisText;
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function handleReservation(e) {
+async function handleReservation(e) {
   e.preventDefault();
 
-  // Hide form, show completion
-  const formCard = reservationForm.closest('.reservation-card');
-  formCard.style.display = 'none';
-  reservationComplete.style.display = 'block';
+  const form = e.target;
+  const button = form.querySelector('.btn-submit');
+  const originalBtnText = button.innerHTML;
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Loading state
+  button.disabled = true;
+  button.innerHTML = '<span>送信中...</span>';
+
+  try {
+    const formData = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      // Hide form, show completion
+      const formCard = reservationForm.closest('.reservation-card');
+      formCard.style.display = 'none';
+      reservationComplete.style.display = 'block';
+    } else {
+      const data = await response.json();
+      if (data.errors) {
+        alert(data.errors.map(error => error.message).join(', '));
+      } else {
+        alert('送信に失敗しました。時間をおいて再度お試しください。');
+      }
+    }
+  } catch (error) {
+    alert('ネットワークエラーが発生しました。インターネット接続を確認してください。');
+  } finally {
+    button.disabled = false;
+    button.innerHTML = originalBtnText;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 function backToCoupon() {

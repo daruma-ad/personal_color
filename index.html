@@ -15,6 +15,9 @@
     href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -220,18 +223,18 @@
         <h2 class="reservation-title">来店予約</h2>
         <p class="reservation-sub">だるまや呉服店 — 駒川商店街</p>
 
-        <form id="reservation-form" class="reservation-form">
+        <form id="reservation-form" class="reservation-form" action="https://formspree.io/f/xreavqdz" method="POST">
           <div class="form-group">
             <label class="form-label">お名前 <span class="required">必須</span></label>
-            <input type="text" id="res-name" class="form-input" placeholder="例：山田 花子" required>
+            <input type="text" id="res-name" name="お名前" class="form-input" placeholder="例：山田 花子" required>
           </div>
           <div class="form-group">
             <label class="form-label">電話番号 <span class="required">必須</span></label>
-            <input type="tel" id="res-phone" class="form-input" placeholder="例：090-1234-5678" required>
+            <input type="tel" id="res-phone" name="電話番号" class="form-input" placeholder="例：090-1234-5678" required>
           </div>
           <div class="form-group">
             <label class="form-label">来店希望日 <span class="required">必須</span></label>
-            <input type="date" id="res-date" class="form-input" required>
+            <input type="date" id="res-date" name="来店希望日" class="form-input" required>
           </div>
 
           <!-- Auto-filled diagnosis result -->
@@ -243,6 +246,9 @@
             <div class="form-info-box coupon-applied" id="res-coupon">
               <span>🎫 1万円OFFクーポン適用中</span>
             </div>
+            <!-- Hidden inputs for Formspree to collect auto-filled data -->
+            <input type="hidden" id="hidden-diagnosis" name="診断結果">
+            <input type="hidden" id="hidden-coupon" name="クーポン適用" value="1万円OFFクーポン">
           </div>
 
           <button type="submit" class="btn btn-cta btn-submit">

@@ -1,0 +1,21 @@
+{
+    "name": "華鏡 - 運命の振袖色診断",
+    "short_name": "華鏡",
+    "description": "パーソナルカラー診断であなたに似合う振袖の色を見つけよう。",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#0a0612",
+    "theme_color": "#d4a843",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "apple-touch-icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
