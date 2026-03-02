@@ -6,51 +6,59 @@
 /* ---------- CSS Custom Properties ---------- */
 :root {
   /* Base */
-  --bg-dark: #0f0e17;
-  --bg-card: rgba(255, 255, 255, 0.06);
-  --bg-card-hover: rgba(255, 255, 255, 0.10);
-  --border-glass: rgba(255, 255, 255, 0.12);
-  --text-primary: #fffffe;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-muted: rgba(255, 255, 255, 0.45);
+  --bg-dark: #FAF8F5;
+  /* Now warm white */
+  --bg-card: rgba(255, 255, 255, 0.85);
+  /* Solid transparent white */
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --border-glass: rgba(155, 35, 53, 0.12);
+  /* Subtle reddish/enji border */
+  --text-primary: #2C2420;
+  /* Dark brown/墨色 for readability on light */
+  --text-secondary: #6B5E54;
+  --text-muted: #9B8E84;
 
-  /* Gold Accent */
-  --gold: #d4a843;
-  --gold-light: #f0d68a;
-  --gold-glow: rgba(212, 168, 67, 0.3);
+  /* Gold Accent & Enji Accent */
+  --gold: #C4A37A;
+  /* Softer, kitsune color */
+  --gold-light: #F8B400;
+  /* Yamabuki brightness */
+  --gold-glow: rgba(196, 163, 122, 0.3);
+  --enji: #9B2335;
+  /* Japanese red */
 
-  /* Seasonal Colors — 和色 */
-  --spring-primary: #f5a0b1;
+  /* Seasonal Colors — 和色 (Adjusted to be lighter/softer for bright theme) */
+  --spring-primary: #E8C4C4;
   /* 桜色 */
-  --spring-secondary: #f7c89b;
-  /* 珊瑚色 */
-  --spring-accent: #c8e6a0;
-  /* 若草色 */
-  --spring-bg: linear-gradient(135deg, #2a1520 0%, #1a1025 50%, #15201a 100%);
+  --spring-secondary: #ffead6;
+  /* 薄紅 */
+  --spring-accent: #e5f2d3;
+  /* 淡萌黄 */
+  --spring-bg: linear-gradient(135deg, #FFF0F2 0%, #FAF8F5 50%, #F5F7F0 100%);
 
-  --summer-primary: #a8b4d6;
+  --summer-primary: #A187BE;
   /* 藤色 */
-  --summer-secondary: #8ec5c0;
-  /* 浅葱色 */
-  --summer-accent: #d6a3c4;
-  /* 薄紅色 */
-  --summer-bg: linear-gradient(135deg, #151a2a 0%, #1a1528 50%, #152025 100%);
+  --summer-secondary: #cce0df;
+  /* 白群 */
+  --summer-accent: #ebdced;
+  /* 薄紫 */
+  --summer-bg: linear-gradient(135deg, #F0F2FA 0%, #FAF8F5 50%, #F0F5F6 100%);
 
-  --autumn-primary: #c87941;
-  /* 紅葉色 */
-  --autumn-secondary: #8b6d2e;
-  /* 琥珀色 */
-  --autumn-accent: #a67c52;
-  /* 朽葉色 */
-  --autumn-bg: linear-gradient(135deg, #201510 0%, #1a1510 50%, #151810 100%);
+  --autumn-primary: #C4A37A;
+  /* 狐色 / 朽葉 */
+  --autumn-secondary: #ebd3a7;
+  /* 淡黄 */
+  --autumn-accent: #d6b89c;
+  /* 小麦色 */
+  --autumn-bg: linear-gradient(135deg, #FAF4E6 0%, #FAF8F5 50%, #F5F0E6 100%);
 
-  --winter-primary: #4a6fa5;
-  /* 群青色 */
-  --winter-secondary: #c44569;
-  /* 紅色 */
-  --winter-accent: #8a8d91;
-  /* 銀鼠色 */
-  --winter-bg: linear-gradient(135deg, #0d1220 0%, #150d1a 50%, #101215 100%);
+  --winter-primary: #264061;
+  /* 藍色 */
+  --winter-secondary: #e6b3c2;
+  /* 撫子 */
+  --winter-accent: #d4d8db;
+  /* 白鼠 */
+  --winter-bg: linear-gradient(135deg, #EBF0F5 0%, #FAF8F5 50%, #F0EEF2 100%);
 
   /* Layout */
   --container-max: 720px;
@@ -126,13 +134,15 @@ body {
 /* ---------- Glass Card ---------- */
 .glass-card {
   background: var(--bg-card);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
   padding: var(--spacing-lg);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(44, 36, 32, 0.05);
+  /* Soft dark shadow */
 }
 
 .glass-card::before {
@@ -142,8 +152,8 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
-  opacity: 0.4;
+  background: linear-gradient(90deg, transparent, var(--enji), transparent);
+  opacity: 0.2;
 }
 
 /* ---------- Buttons ---------- */
@@ -165,24 +175,24 @@ body {
 }
 
 .btn-hero {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #1a1510;
+  background: linear-gradient(135deg, var(--enji), #7A1C2A);
+  color: #ffffff;
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
   font-weight: 700;
   border-radius: 60px;
   letter-spacing: 0.15em;
-  box-shadow: 0 0 30px var(--gold-glow);
+  box-shadow: 0 4px 20px rgba(155, 35, 53, 0.3);
 }
 
 .btn-hero:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 50px var(--gold-glow);
+  box-shadow: 0 8px 30px rgba(155, 35, 53, 0.4);
 }
 
 .btn-primary {
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #1a1510;
+  color: #ffffff;
   padding: 1rem 2.5rem;
   font-size: 1.05rem;
   font-weight: 700;
@@ -214,18 +224,18 @@ body {
 }
 
 .btn-cta {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #1a1510;
+  background: linear-gradient(135deg, var(--enji), #7A1C2A);
+  color: #ffffff;
   padding: 1rem 2rem;
   font-weight: 700;
   border-radius: 60px;
   letter-spacing: 0.08em;
-  box-shadow: 0 4px 20px var(--gold-glow);
+  box-shadow: 0 4px 20px rgba(155, 35, 53, 0.3);
 }
 
 .btn-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 40px var(--gold-glow);
+  box-shadow: 0 8px 30px rgba(155, 35, 53, 0.4);
 }
 
 .btn-phone {
@@ -265,8 +275,9 @@ body {
   justify-content: center;
   text-align: center;
   padding: var(--spacing-lg);
-  background: radial-gradient(ellipse at 30% 20%, rgba(212, 168, 67, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 80%, rgba(245, 160, 177, 0.06) 0%, transparent 50%),
+  background: radial-gradient(ellipse at 15% 25%, rgba(155, 35, 53, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 75%, rgba(38, 64, 97, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(123, 141, 66, 0.03) 0%, transparent 50%),
     var(--bg-dark);
 }
 
@@ -299,13 +310,13 @@ body {
 
 .title-line.accent {
   font-size: clamp(2.8rem, 10vw, 5rem);
-  background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+  background: linear-gradient(135deg, var(--enji), #7A1C2A, var(--enji));
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: shimmer 4s ease-in-out infinite;
-  filter: drop-shadow(0 0 20px var(--gold-glow));
+  filter: drop-shadow(0 0 10px rgba(155, 35, 53, 0.2));
 }
 
 .hero-subtitle {
@@ -366,7 +377,7 @@ body {
 .scroll-line {
   width: 1px;
   height: 50px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
+  background: linear-gradient(to bottom, var(--enji), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 
